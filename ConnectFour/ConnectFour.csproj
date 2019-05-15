@@ -48,6 +48,8 @@
     <Compile Include="GameState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Support\Action.cs" />
+    <Compile Include="Support\Actions.cs" />
     <Compile Include="Support\Camera.cs" />
     <Compile Include="Support\Enums.cs" />
     <Compile Include="Support\Font.cs" />
