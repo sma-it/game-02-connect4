@@ -7,12 +7,16 @@ namespace ConnectFour
     {
         Support.Actions actions = new Support.Actions();
         Board board = new Board();
+        Validator validator;
         Chip currentChip;
         bool player1Active = true;
+
+        string statusText = string.Empty;
 
         public GameState()
         {
             currentChip = new Chip(player1Active);
+            validator = new Validator(board);
 
             actions.Set(Keys.Left, () => {
                 currentChip.MoveLeft();
@@ -27,8 +31,15 @@ namespace ConnectFour
             {
                 if(board.TryToMoveDown(currentChip))
                 {
-                    player1Active = !player1Active;
-                    currentChip = new Chip(player1Active);
+                    Winner winner = validator.FindWinner();
+                    if(winner == Winner.None)
+                    {
+                        player1Active = !player1Active;
+                        currentChip = new Chip(player1Active);
+                    } else
+                    {
+                        statusText = winner.ToString();
+                    }
                 }
             });
         }
@@ -45,6 +56,8 @@ namespace ConnectFour
         {
             currentChip.Draw();
             board.Draw();
+
+            Support.Font.PrintStatusLine(statusText, 0, Color.Black);
         }
     }
 }

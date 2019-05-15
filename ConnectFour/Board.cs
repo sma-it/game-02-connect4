@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace ConnectFour
 {
+    
+
     class Board
     {
         List<List<Cell>> cells = new List<List<Cell>>();
-        int width = 8;
-        int height = 6;
+        public List<List<Cell>> Cells { get => cells; }
+
+        int width = 8; public int Width { get => width; }
+        int height = 6; public int Height { get => height; }
 
         public Board()
         {
@@ -74,5 +78,7 @@ namespace ConnectFour
         {
             return new Vector2(-0.7f + x * 0.2f, -0.6f + y * 0.2f);
         }
+
+        
     }
 }

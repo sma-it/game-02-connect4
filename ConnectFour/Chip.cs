@@ -23,10 +23,14 @@ namespace ConnectFour
         Vector2 targetPosition;
         Move move = Move.None;
 
+        bool player1;
+        public bool Player1 { get => player1; }
+
         public Chip(bool player1) : base(player1 ? "red_chip" : "yellow_chip", new Vector2(), new Vector2(0.2f))
         {
             Position = Board.getScreenPos(X, Y);
             targetPosition = Position;
+            this.player1 = player1;
         }
 
         public void MoveLeft()
