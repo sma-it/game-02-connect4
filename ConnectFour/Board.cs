@@ -10,18 +10,29 @@ namespace ConnectFour
     class Board
     {
         List<List<Cell>> cells = new List<List<Cell>>();
+        int width = 8;
+        int height = 6;
 
         public Board()
         {
-            for(int x = 0; x < 8; x++)
+            for(int x = 0; x < width; x++)
             {
                 cells.Add(new List<Cell>());
 
-                for(int y = 0; y < 6; y++)
+                for(int y = 0; y < height; y++)
                 {
                     cells[x].Add(new Cell(x, y));
                 }
             }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            cells.ForEach(
+                column => column.ForEach(
+                    cell => cell.Update(gameTime)
+                )
+            );
         }
 
         public void Draw()
@@ -31,6 +42,16 @@ namespace ConnectFour
                     cell => cell.Draw()
                 )
             );
+        }
+
+        public Cell GetFreeCell(int column)
+        {
+            for(int i = 0; i < height; i++)
+            {
+                if (!cells[column][i].HasChip()) return cells[column][i];
+            }
+            // no free cell found!
+            return null;
         }
 
         public static Vector2 getScreenPos(int x, int y)
