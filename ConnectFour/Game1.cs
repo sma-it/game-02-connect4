@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace ConnectFour
 {
@@ -9,13 +11,24 @@ namespace ConnectFour
     /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public static GraphicsDeviceManager sGraphics;
+        public static SpriteBatch sSpriteBatch;
+        public static ContentManager sContent;
+        public static Random sRandom = new Random();
+
+        int windowWidth = 1000;
+        int windowHeight = 800;
+
+        GameState gameState;
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            sGraphics = new GraphicsDeviceManager(this);
+            sGraphics.PreferredBackBufferWidth = windowWidth;
+            sGraphics.PreferredBackBufferHeight = windowHeight;
+
             Content.RootDirectory = "Content";
+            sContent = Content;
         }
 
         /// <summary>
@@ -29,6 +42,8 @@ namespace ConnectFour
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            Support.Camera.Setup();
+            Support.Font.Setup();
         }
 
         /// <summary>
@@ -38,9 +53,8 @@ namespace ConnectFour
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            sSpriteBatch = new SpriteBatch(GraphicsDevice);
+            gameState = new GameState();
         }
 
         /// <summary>
@@ -62,8 +76,7 @@ namespace ConnectFour
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-
+            gameState.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -76,6 +89,9 @@ namespace ConnectFour
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            sSpriteBatch.Begin();
+            gameState.Draw(gameTime);
+            sSpriteBatch.End();
 
             base.Draw(gameTime);
         }
