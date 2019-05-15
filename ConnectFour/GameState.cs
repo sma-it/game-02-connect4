@@ -5,6 +5,8 @@ namespace ConnectFour
 {
     class GameState
     {
+        Board board = new Board();
+
         public GameState()
         {
 
@@ -17,7 +19,7 @@ namespace ConnectFour
 
         public void Draw(GameTime gameTime)
         {
-
+            board.Draw();
         }
     }
 }
