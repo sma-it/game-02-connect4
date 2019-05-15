@@ -17,8 +17,8 @@ namespace ConnectFour
 
     public class Chip : Support.Texture
     {
-        int X = -1;
-        int Y = 6;
+        public int X = -1;
+        public int Y = 6;
 
         Vector2 targetPosition;
         Move move = Move.None;
