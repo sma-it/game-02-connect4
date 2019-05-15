@@ -7,6 +7,13 @@ using Microsoft.Xna.Framework;
 
 namespace ConnectFour
 {
+    public enum CellState
+    {
+        Empty,
+        PlayerOne,
+        PlayerTwo,
+    }
+
     public class Cell : Support.Texture
     {
         public int X { get; set; }
@@ -25,6 +32,12 @@ namespace ConnectFour
         public bool HasChip()
         {
             return chip != null;
+        }
+
+        public CellState State() {
+            if (chip == null) return CellState.Empty;
+            else if (chip.Player1) return CellState.PlayerOne;
+            else return CellState.PlayerTwo;
         }
 
         public void Insert(Chip chip)

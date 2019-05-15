@@ -54,6 +54,7 @@
     <Compile Include="Support\Enums.cs" />
     <Compile Include="Support\Font.cs" />
     <Compile Include="Support\Texture.cs" />
+    <Compile Include="Validator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
