@@ -5,9 +5,8 @@ namespace ConnectFour
 {
     class GameState
     {
-        Support.Actions actions = new Support.Actions();
         Board board = new Board();
-        Validator validator;
+        GameController controller;
         Chip currentChip;
         bool player1Active = true;
 
@@ -16,37 +15,19 @@ namespace ConnectFour
         public GameState()
         {
             currentChip = new Chip(player1Active);
-            validator = new Validator(board);
-
-            actions.Set(Keys.Left, () => {
-                currentChip.MoveLeft();
-            });
-
-            actions.Set(Keys.Right, () =>
-            {
-                currentChip.MoveRight();
-            });
-
-            actions.Set(Keys.Space, () =>
-            {
-                if(board.TryToMoveDown(currentChip))
-                {
-                    Winner winner = validator.FindWinner();
-                    if(winner == Winner.None)
-                    {
-                        player1Active = !player1Active;
-                        currentChip = new Chip(player1Active);
-                    } else
-                    {
-                        statusText = winner.ToString();
-                    }
-                }
-            });
+            controller = new GameController(board);
         }
 
         public void Update(GameTime gameTime)
         {
-            actions.Update();
+            controller.Update(currentChip);
+
+            if (controller.NewChipNeeded)
+            {
+                player1Active = !player1Active;
+                currentChip = new Chip(player1Active);
+                controller.NewChipNeeded = false;
+            }
 
             currentChip.Update(gameTime);
             board.Update(gameTime);
@@ -54,10 +35,20 @@ namespace ConnectFour
 
         public void Draw(GameTime gameTime)
         {
-            currentChip.Draw();
-            board.Draw();
-
-            Support.Font.PrintStatusLine(statusText, 0, Color.Black);
+            if(controller.Winner == Winner.None)
+            {
+                currentChip.Draw();
+                board.Draw();
+            }
+            else if (controller.Winner == Winner.Player1)
+            {
+                Support.Font.PrintAt(new Vector2(-0.4f, 0), "Player 1 has won this round.", Color.White);
+                Support.Font.PrintAt(new Vector2(-0.37f, -0.2f), "Press N for another game.", Color.White);
+            } else
+            {
+                Support.Font.PrintAt(new Vector2(-0.4f, 0), "Player 2 has won this round.", Color.White);
+                Support.Font.PrintAt(new Vector2(-0.37f, -0.2f), "Press N for another game.", Color.White);
+            }
         }
     }
 }
