@@ -74,6 +74,15 @@ namespace ConnectFour
             }
         }
 
+        public void Clear()
+        {
+            cells.ForEach(
+                column => column.ForEach(
+                    cell => cell.Clear()
+                )
+            );
+        }
+
         public static Vector2 getScreenPos(int x, int y)
         {
             return new Vector2(-0.7f + x * 0.2f, -0.6f + y * 0.2f);

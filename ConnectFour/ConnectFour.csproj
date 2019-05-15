@@ -45,6 +45,7 @@
     <Compile Include="Cell.cs" />
     <Compile Include="Chip.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="GameController.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

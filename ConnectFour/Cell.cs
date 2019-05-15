@@ -45,6 +45,11 @@ namespace ConnectFour
             this.chip = chip;
         }
 
+        public void Clear()
+        {
+            this.chip = null;
+        }
+
         public void Update(GameTime gameTime)
         {
             if (chip != null) chip.Update(gameTime);
